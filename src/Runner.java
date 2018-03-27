@@ -1,0 +1,67 @@
+import by.gsu.tkp.beans.Employee;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Runner {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Input list length");
+        int length = sc.nextInt();
+        List<Employee> list = getList(length, sc);
+        writeToFile("lab3.out", list);
+        List<Employee> list2 = readFromFile("lab3.out");
+        for (Employee employee : list2) {
+            System.out.println(employee);
+        }
+
+    }
+    public static List<Employee> readFromFile(String filename){
+        ArrayList<Employee> list = null;
+        try {
+            FileInputStream fis = new FileInputStream(filename);
+            ObjectInputStream oin = new ObjectInputStream(fis);
+            list = (ArrayList<Employee>) oin.readObject();
+            oin.close();
+
+        } catch (IOException |ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+    public static void writeToFile(String filename, List<?> list){
+        try {
+            FileOutputStream  fos = new FileOutputStream(filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(list);
+            oos.flush();
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public static List<Employee> getList(int length, Scanner sc){
+        String name;
+        String position;
+        int salary;
+        int surchargeRate;
+        List<Employee> list = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            System.out.println("For employee: ");
+            sc.nextLine();
+            System.out.println("Input name");
+            name = sc.nextLine();
+            System.out.println("Input position");
+            position = sc.nextLine();
+            System.out.println("Input salary");
+            salary = sc.nextInt();
+            System.out.println("Input surcharge rate");
+            surchargeRate = sc.nextInt();
+            list.add(new Employee(name, position, salary, surchargeRate));
+        }
+        return  list;
+    }
+
+}
