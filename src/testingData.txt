@@ -1,0 +1,7 @@
+sugar;5;200;
+bread;8;100;
+butter;10;30;
+car;2000;5;
+table;90;3;
+spun;1;2000;
+carpet;55;60;
